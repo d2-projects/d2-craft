@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@d2-craft/react-core": ["packages/react-core/src/index.ts"],
       "@d2-craft/typed": ["packages/typed/src/index.ts"]
     }
   },
