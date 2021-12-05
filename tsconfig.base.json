@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@d2-craft/typed": ["packages/typed/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
