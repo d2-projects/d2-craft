@@ -13,24 +13,42 @@ export interface RootMeta<_NodeMeta> {
   children: _NodeMeta[]
 }
 
-type NodeMeta
-  = NodeMetaBase<'A', { a: string }, NodeMeta>
-  | NodeMetaBase<'B', { b: string }, NodeMeta>
-  | NodeMetaBase<'C', { c: string }, NodeMeta>
+type NodeMeta<Ex = null>
+  = NodeMetaBase<'A', { a: string }, NodeMeta<Ex>>
+  | NodeMetaBase<'B', { b: string }, NodeMeta<Ex>>
+  | NodeMetaBase<'C', { c: string }, NodeMeta<Ex>>
+  | Ex
 
-export const testTree: RootMeta<NodeMeta> = {
+// extends
+type ExNodeMeta<Ex = null> = NodeMeta<
+    NodeMetaBase<'E', { e: string }, NodeMeta<ExNodeMeta>>
+  | NodeMetaBase<'F', { f: string }, NodeMeta<ExNodeMeta>>
+  | Ex
+>
+
+// extends align
+type ExxNodeMeta = ExNodeMeta<
+    NodeMetaBase<'X', { x: string }, NodeMeta<ExxNodeMeta>>
+  | NodeMetaBase<'Y', { y: string }, NodeMeta<ExxNodeMeta>>
+>
+
+export const testTree: RootMeta<ExxNodeMeta> = {
   version: '1',
   children: [{
     component: 'A',
-    config: {
-      a: 'asd'
-    },
+    config: { a: 'asd' },
     children: [
       {component: 'B', config: {b: 'b'}, children: [
-        {component: 'C', config: {
-          c: 'c'
-        }}
+        {component: 'C', config: { c: 'c' }},
+        {component: 'E', children: [
+          { component: 'B' },
+          { component: 'A', children: [{ component: 'E' }]}
+        ]}
       ]}
     ]
+  }, {
+    component: 'X',
+    config: { x: '' },
+    children: [{ component: 'A' }]
   }]
 }
