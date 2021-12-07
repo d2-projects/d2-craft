@@ -1,6 +1,8 @@
 {
   "version": 2,
   "projects": {
+    "react-base-antd-example": "packages/react-base-antd-example",
+    "react-base-antd-example-e2e": "packages/react-base-antd-example-e2e",
     "react-core": "packages/react-core",
     "typed": "packages/typed"
   }

@@ -18,8 +18,18 @@
   "generators": {
     "@nrwl/react": {
       "application": {
+        "style": "scss",
+        "linter": "eslint",
         "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
       }
     }
-  }
+  },
+  "defaultProject": "react-base-antd-example"
 }
