@@ -29,6 +29,6 @@ export type NodeMeta<Ex = null> = Ex
  *     }]
  *   }
  */
-export interface RootMeta<ExtendableNodeMeta> {
+export interface RootMeta<ExtendableNodeMeta = null> {
   children: ExtendableNodeMeta[]
 }
