@@ -1,7 +1,11 @@
 import { createContext, useContext } from "react";
 import { NodeMeta } from "@d2-craft/typed";
 
-export function CraftNode() {
+export interface CraftNodeProps<ExtendableNodeMeta> {
+  meta: NodeMeta<ExtendableNodeMeta>
+}
+
+export function CraftNode<ExtendableNodeMeta>(props: CraftNodeProps<ExtendableNodeMeta>) {
   return (
     <div>
       <h1>Welcome to CraftNode!</h1>
