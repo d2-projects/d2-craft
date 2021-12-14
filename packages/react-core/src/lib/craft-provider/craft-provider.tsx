@@ -1,29 +1,22 @@
 import { createContext, useCallback, useContext, useMemo } from "react";
 
+let uidIndex = 0
+const uid = () => String(uidIndex++)
+
 /* Context */
 
 const CraftContext = createContext<{
   uid: () => string
-}>({
-  uid: () => ''
-})
+}>({ uid })
 
-export const useCraftContext = () => {
-  return useContext(CraftContext)
-}
+export const useCraftContext = () => useContext(CraftContext)
 
 /* eslint-disable-next-line */
 export interface CraftProviderProps {}
 
 export const CraftProvider: React.FC<CraftProviderProps> = (props) => {
 
-  const uid = useCallback(() => {
-    return ''
-  }, [])
-
-  const value = useMemo(() => {
-    return { uid }
-  }, [uid])
+  const value = useMemo(() =>  ({ uid }), [])
 
   return (
     <CraftContext.Provider value={value}>
