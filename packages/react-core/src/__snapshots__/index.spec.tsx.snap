@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React Core should render successfully 1`] = `
+<body>
+  <div>
+    <div
+      class="craft-root"
+    >
+      <div
+        class="component-a"
+      >
+        <b>
+          Component A: 
+          1
+        </b>
+        <div
+          class="component-a-children"
+        >
+          <div
+            class="component-b"
+          >
+            <b>
+              Component B: 
+              2
+            </b>
+            <div
+              class="component-b-children"
+            >
+              <div
+                class="component-c"
+              >
+                <b>
+                  Component C: 
+                  3
+                </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

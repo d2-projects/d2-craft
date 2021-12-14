@@ -1,15 +1,15 @@
 import { createContext, useContext } from "react";
-import { NodeMeta } from "@d2-craft/typed";
+import { NodeMeta, exUnusedMeta } from "@d2-craft/typed";
 
-export interface CraftNodeProps<ExtendableNodeMeta> {
-  meta: NodeMeta<ExtendableNodeMeta>
+export interface CraftNodeProps {
+  meta: unknown
 }
 
-export function CraftNode<ExtendableNodeMeta>(props: CraftNodeProps<ExtendableNodeMeta>) {
+export const CraftNode: React.FC<CraftNodeProps> = (props) => {
   return (
-    <div>
-      <h1>Welcome to CraftNode!</h1>
-    </div>
+    <CraftNodeContext.Provider value={{ __id: 'TODO', meta: props.meta }}>
+      {props.children}
+    </CraftNodeContext.Provider>
   );
 }
 
@@ -19,12 +19,13 @@ export default CraftNode;
 
 export const CraftNodeContext = createContext<{
   __id: string;
-  meta: NodeMeta
+  meta: unknown
 }>({
   __id: '',
-  meta: null
+  meta: exUnusedMeta as unknown
 })
 
-export const useCraftNodeContext = () => {
-  return useContext(CraftNodeContext)
+export const useCraftNode = <MetaType,>() => {
+  const { meta, __id }  = useContext(CraftNodeContext)
+  return { meta: meta as unknown as MetaType, __id }
 }

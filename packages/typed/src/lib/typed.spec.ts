@@ -1,9 +1,9 @@
-import { NodeMeta, NodeMetaBase, RootMeta } from './typed';
+import { ExUnused, NodeMeta, NodeMetaBase, RootMeta } from './typed';
 
 describe('typed', () => {
   it('should work', () => {
     type ExItem<N, C> = NodeMetaBase<N, C, NodeMeta<ExNodeMeta>>
-    type ExNodeMeta<Ex = null> = NodeMeta< Ex
+    type ExNodeMeta<Ex = ExUnused> = NodeMeta< Ex
       | ExItem<'A', { a: string }>
       | ExItem<'B', { b: string }>
     >

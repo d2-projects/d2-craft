@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo } from "react";
+import React, { createContext, useCallback, useContext, useMemo } from "react";
 
 let uidIndex = 0
 const uid = () => String(uidIndex++)
@@ -7,16 +7,21 @@ const uid = () => String(uidIndex++)
 
 const CraftContext = createContext<{
   uid: () => string
-}>({ uid })
+  componentMap: Map<string, React.ComponentType>
+}>({ uid, componentMap: new Map() })
 
-export const useCraftContext = () => useContext(CraftContext)
+export const useCraftProvider = () => useContext(CraftContext)
 
-/* eslint-disable-next-line */
-export interface CraftProviderProps {}
+export interface CraftProviderProps {
+  componentMap: Map<string, React.ComponentType>
+}
 
 export const CraftProvider: React.FC<CraftProviderProps> = (props) => {
 
-  const value = useMemo(() =>  ({ uid }), [])
+  const value = useMemo(() =>  ({
+    uid,
+    componentMap: props.componentMap
+  }), [props.componentMap])
 
   return (
     <CraftContext.Provider value={value}>
@@ -26,3 +31,19 @@ export const CraftProvider: React.FC<CraftProviderProps> = (props) => {
 }
 
 export default CraftProvider;
+
+/* Utils */
+
+export const makeComponentMap = () => {
+  const componentMap = new Map<string, React.ComponentType>()
+
+  const self = {
+    value: () => componentMap,
+    append: <M extends { component: string },>(name: M['component'], fc: React.ComponentType) => {
+      componentMap.set(name, fc)
+      return self
+    }
+  }
+
+  return self
+}
