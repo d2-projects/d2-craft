@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, ReactNode, ReactPropTypes, useContext } from "react";
+import { createContext, ReactNode, ReactPropTypes, useContext } from "react";
 import { RootMeta } from '@d2-craft/typed'
 
 export interface CraftRootProps<ExtendableNodeMeta> {
