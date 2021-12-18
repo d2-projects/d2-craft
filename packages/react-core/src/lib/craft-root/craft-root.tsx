@@ -5,23 +5,41 @@ import { useCraftProvider } from "../craft-provider/craft-provider";
 
 export interface CraftRootProps<ExtendableNodeMeta> {
   meta: RootMeta<ExtendableNodeMeta>;
-  children?: ReactNode | undefined;
+  children: (rootMeta: RootMeta<ExtendableNodeMeta & { __uid: string }>) => ReactNode;
 }
 
 export function CraftRoot<ExtendableNodeMeta>(props: CraftRootProps<ExtendableNodeMeta>) {
-  const { indexTree } = useCraftProvider()
-  const innerMeta = useMemo(() => indexTree(props.meta), [indexTree, props.meta])
+  const { uid } = useCraftProvider()
+  const indexedMeta = useMemo(() => indexTree<ExtendableNodeMeta>(props.meta, uid), [props.meta, uid])
 
-  useImmer(innerMeta)
+  useImmer(indexedMeta)
 
   return (
-    <CraftRootContext.Provider value={{ meta: props.meta }}>
-      {props.children}
+    <CraftRootContext.Provider value={{ meta: indexedMeta }}>
+      {props.children(indexedMeta)}
     </CraftRootContext.Provider>
   );
 }
 
 export default CraftRoot;
+
+/* Self utils */
+
+const indexTree =  <X extends { children?: X[] },>(
+  i: RootMeta<X>,
+  uidGenerator: () => string
+): RootMeta<X & { __uid: string }> => {
+
+  const it = (node: X): X => ({
+    ...node,
+    __uid: uidGenerator(),
+    children: node.children?.map(it)
+  })
+
+  const tree = { ...i, children: i.children.map(it) }
+
+  return tree as RootMeta<X & { __uid: string }>
+}
 
 /* Context */
 
@@ -36,5 +54,3 @@ export const CraftRootContext = createContext<{
 export const useCraftRoot = () => {
   return useContext(CraftRootContext)
 }
-
-

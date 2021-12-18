@@ -14,7 +14,7 @@ describe('React Core', () => {
       const { componentMap } = useCraftProvider()
 
       return (
-        <div className="component-a">
+        <div className="component-a" data-craft-uid={meta.__uid}>
           <b>Component A: { meta.config?.a }</b>
           <div className="component-a-children">
             {
@@ -40,7 +40,7 @@ describe('React Core', () => {
       const { componentMap } = useCraftProvider()
 
       return (
-        <div className="component-b">
+        <div className="component-b" data-craft-uid={meta.__uid}>
           <b>Component B: { meta.config?.b }</b>
           <div className="component-b-children">
             {
@@ -65,7 +65,7 @@ describe('React Core', () => {
       const { meta } = useCraftNode<ComponentMetaC>()
 
       return (
-        <div className="component-c">
+        <div className="component-c" data-craft-uid={meta.__uid}>
           <b>Component C: { meta.config?.c }</b>
         </div>
       )
@@ -106,16 +106,18 @@ describe('React Core', () => {
     const { baseElement } = render(
       <CraftProvider componentMap={componentMap}>
         <CraftRoot<ExMetaTree> meta={rootMeta}>
-          <div className="craft-root">
-            {rootMeta.children.map((child, key) => {
-              const Component = componentMap.get(child.component)
-              return Component && (
-                <CraftNode meta={child} key={key}>
-                  <Component />
-                </CraftNode>
-              )
-            })}
-          </div>
+          {(rootMeta) => (
+            <div className="craft-root">
+              {rootMeta.children.map((child, key) => {
+                const Component = componentMap.get(child.component)
+                return Component && (
+                  <CraftNode meta={child} key={key}>
+                    <Component />
+                  </CraftNode>
+                )
+              })}
+            </div>
+          )}
         </CraftRoot>
       </CraftProvider>
     );

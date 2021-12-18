@@ -7,7 +7,7 @@ export interface CraftNodeProps {
 
 export const CraftNode: React.FC<CraftNodeProps> = (props) => {
   return (
-    <CraftNodeContext.Provider value={{ __id: 'TODO', meta: props.meta }}>
+    <CraftNodeContext.Provider value={{ meta: props.meta }}>
       {props.children}
     </CraftNodeContext.Provider>
   );
@@ -18,14 +18,12 @@ export default CraftNode;
 /* Context */
 
 export const CraftNodeContext = createContext<{
-  __id: string;
   meta: unknown
 }>({
-  __id: '',
   meta: exUnusedMeta as unknown
 })
 
 export const useCraftNode = <MetaType,>() => {
-  const { meta, __id }  = useContext(CraftNodeContext)
-  return { meta: meta as unknown as MetaType, __id }
+  const { meta }  = useContext(CraftNodeContext)
+  return { meta: meta as unknown as MetaType & { __uid: string } }
 }
