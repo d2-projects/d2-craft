@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { NodeMeta, exUnusedMeta } from "@d2-craft/typed";
+import { NodeMeta, exUnusedMeta, ExUnused } from "@d2-craft/typed";
 
 export interface CraftNodeProps {
   meta: unknown
@@ -23,7 +23,17 @@ export const CraftNodeContext = createContext<{
   meta: exUnusedMeta as unknown
 })
 
-export const useCraftNode = <MetaType,>() => {
-  const { meta }  = useContext(CraftNodeContext)
-  return { meta: meta as unknown as MetaType & { __uid: string } }
+export function useCraftNode<MetaType extends { children?: unknown[] }>() {
+  type X = MetaType extends { children?: Array<infer R> } ? R : unknown
+
+  type Y = X & { __uid: string, children?: Y[] }
+
+  const meta  = useContext(CraftNodeContext).meta as unknown as Omit<MetaType, 'children'> & {
+    __uid: string
+    children?: Y[]
+  }
+
+  return {
+    meta
+  }
 }
