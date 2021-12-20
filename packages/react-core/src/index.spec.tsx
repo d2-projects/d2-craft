@@ -7,7 +7,7 @@ describe('React Core', () => {
   it('should render successfully', () => {
 
     // Example component A
-    type ComponentMetaA = ExMeta<'A', { a: string }>;
+    type ComponentMetaA = ExItem<'A', { a: string }>;
 
     const ComponentA: React.FC = () => {
       const { meta } = useCraftNode<ComponentMetaA>()
@@ -33,7 +33,7 @@ describe('React Core', () => {
     }
 
     // Example component B
-    type ComponentMetaB = ExMeta<'B', { b: string }>
+    type ComponentMetaB = ExItem<'B', { b: string }>
 
     const ComponentB: React.FC = () => {
       const { meta } = useCraftNode<ComponentMetaB>()
@@ -59,7 +59,7 @@ describe('React Core', () => {
     }
 
     // Example component C
-    type ComponentMetaC = ExMeta<'C', { c: string }>
+    type ComponentMetaC = ExItem<'C', { c: string }>
 
     const ComponentC: React.FC = () => {
       const { meta } = useCraftNode<ComponentMetaC>()
@@ -72,8 +72,8 @@ describe('React Core', () => {
     }
 
     // Recursive components meta
-    type ExMeta<N, C> = NodeMetaBase<N, C, NodeMeta<ExMetaTree>>
-    type ExMetaTree<Ex = ExUnused> = NodeMeta< Ex
+    type ExItem<N, C> = NodeMetaBase<N, C, NodeMeta<ExNodeMeta>>
+    type ExNodeMeta<Ex = ExUnused> = NodeMeta< Ex
       | ComponentMetaA
       | ComponentMetaB
       | ComponentMetaC
@@ -87,7 +87,7 @@ describe('React Core', () => {
       .value()
 
     // Example data
-    const rootMeta: RootMeta<ExMetaTree> = {
+    const rootMeta: RootMeta<ExNodeMeta> = {
       children: [{
         component: 'A',
         config: { a: '1' },
@@ -105,7 +105,7 @@ describe('React Core', () => {
     // Three layer construct
     const { baseElement } = render(
       <CraftProvider componentMap={componentMap}>
-        <CraftRoot<ExMetaTree> meta={rootMeta}>
+        <CraftRoot<ExNodeMeta> meta={rootMeta}>
           {(rootMeta) => (
             <div className="craft-root">
               {rootMeta.children.map((child, key) => {
