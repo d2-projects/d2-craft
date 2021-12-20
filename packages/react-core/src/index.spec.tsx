@@ -11,21 +11,17 @@ describe('React Core', () => {
 
     const ComponentA: React.FC = () => {
       const { meta } = useCraftNode<ComponentMetaA>()
-      const { componentMap } = useCraftProvider()
 
       return (
         <div className="component-a" data-craft-uid={meta.__uid}>
           <b>Component A: { meta.config?.a }</b>
           <div className="component-a-children">
             {
-              meta.children?.map((child, key) => {
-                const Component = componentMap.get(child.component)
-                return Component && (
-                  <CraftNode meta={child} key={key}>
-                    <Component />
-                  </CraftNode>
-                )
-              })
+              meta.children?.map((child) => (
+                <CraftNode meta={child} key={child.__uid}>
+                  <CraftRender />
+                </CraftNode>
+              ))
             }
           </div>
         </div>
@@ -37,21 +33,17 @@ describe('React Core', () => {
 
     const ComponentB: React.FC = () => {
       const { meta } = useCraftNode<ComponentMetaB>()
-      const { componentMap } = useCraftProvider()
 
       return (
         <div className="component-b" data-craft-uid={meta.__uid}>
           <b>Component B: { meta.config?.b }</b>
           <div className="component-b-children">
             {
-              meta.children?.map((child, key) => {
-                const Component = componentMap.get(child.component)
-                return Component && (
-                  <CraftNode meta={child} key={key}>
-                    <Component />
-                  </CraftNode>
-                )
-              })
+              meta.children?.map((child) => (
+                <CraftNode meta={child} key={child.__uid}>
+                  <CraftRender />
+                </CraftNode>
+              ))
             }
           </div>
         </div>
