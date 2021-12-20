@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { ExUnused, NodeMeta, NodeMetaBase, RootMeta } from '@d2-craft/typed';
-import { CraftProvider, CraftRoot, useCraftNode, makeComponentMap, CraftNode, useCraftProvider } from './index'
+import { CraftProvider, CraftRoot, useCraftNode, makeComponentMap, CraftNode, useCraftProvider, CraftRender } from './index'
 import React from 'react';
 
 describe('React Core', () => {
@@ -108,14 +108,11 @@ describe('React Core', () => {
         <CraftRoot<ExNodeMeta> meta={rootMeta}>
           {(rootMeta) => (
             <div className="craft-root">
-              {rootMeta.children.map((child, key) => {
-                const Component = componentMap.get(child.component)
-                return Component && (
-                  <CraftNode meta={child} key={key}>
-                    <Component />
-                  </CraftNode>
-                )
-              })}
+              {rootMeta.children.map((child) => (
+                <CraftNode meta={child} key={child.__uid}>
+                  <CraftRender />
+                </CraftNode>
+              ))}
             </div>
           )}
         </CraftRoot>
