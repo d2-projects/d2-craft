@@ -7,7 +7,7 @@ export interface NodeMetaBase<Name, Config, _NodeMeta> {
 /**
  * Don't use it
  */
-export type ExUnused = { component: '_' }
+export type ExUnused = { component: '_', children?: ExUnused[] }
 export const exUnusedMeta: ExUnused = { component: '_' }
 
 export type NodeMeta<Ex = ExUnused> = Ex
