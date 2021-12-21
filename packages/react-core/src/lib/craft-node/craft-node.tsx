@@ -24,16 +24,16 @@ export const CraftNodeContext = createContext<{
 })
 
 export function useCraftNode<MetaType extends { children?: unknown[] }>() {
-  type X = MetaType extends { children?: Array<infer R> } ? R : unknown
+  type NodeType = MetaType extends { children?: Array<infer R> } ? R : unknown
 
-  type Y = X & { __uid: string, children?: Y[] }
+  type MixNodeType = NodeType & { __uid: string, children?: MixNodeType[] }
 
-  const meta  = useContext(CraftNodeContext).meta as unknown as Omit<MetaType, 'children'> & {
+  type CurrentNodeType = Omit<MetaType, 'children'> & {
     __uid: string
-    children?: Y[]
+    children?: MixNodeType[]
   }
 
-  return {
-    meta
-  }
+  const meta  = useContext(CraftNodeContext).meta as unknown as CurrentNodeType
+
+  return { meta }
 }
