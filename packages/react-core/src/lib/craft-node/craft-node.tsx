@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { NodeMeta, exUnusedMeta, ExUnused } from "@d2-craft/typed";
+import { exUnusedMeta } from "@d2-craft/typed";
 
 export interface CraftNodeProps {
   meta: unknown

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { ExUnused, NodeMeta, NodeMetaBase, RootMeta } from '@d2-craft/typed';
-import { CraftProvider, CraftRoot, useCraftNode, makeComponentMap, CraftNode, useCraftProvider, CraftRender } from './index'
+import { CraftProvider, CraftRoot, useCraftNode, makeComponentMap, CraftNode, CraftRender } from './index'
 import React from 'react';
 
 describe('React Core', () => {
