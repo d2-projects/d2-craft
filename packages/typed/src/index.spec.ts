@@ -1,4 +1,4 @@
-import { ExUnused, NodeMeta, NodeMetaBase, RootMeta } from './typed';
+import { ExUnused, NodeMeta, NodeMetaBase, RootMeta } from '.';
 
 describe('typed', () => {
   it('should work', () => {
