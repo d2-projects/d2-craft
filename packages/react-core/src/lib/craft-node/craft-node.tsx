@@ -17,7 +17,7 @@ export default CraftNode;
 
 /* Context */
 
-export const CraftNodeContext = createContext<{
+const CraftNodeContext = createContext<{
   meta: unknown
 }>({
   meta: exUnusedMeta as unknown

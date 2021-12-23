@@ -47,7 +47,7 @@ export default CraftRoot;
 
 /* Context */
 
-export const CraftRootContext = createContext<{
+const CraftRootContext = createContext<{
   meta: unknown
   updater: unknown
 }>({
