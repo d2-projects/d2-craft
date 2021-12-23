@@ -8,15 +8,15 @@ exports[`React Core should render container and children with item wrapper 1`] =
     >
       <div
         class="flex-container"
-        data-craft-uid="3"
+        data-craft-uid="0"
       >
         <div
           class="flex-container-item"
-          data-item-uid="4"
+          data-item-uid="1"
         >
           <div
             class="text"
-            data-craft-uid="4"
+            data-craft-uid="1"
           >
             <b>
               Hello

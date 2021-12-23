@@ -1,14 +1,11 @@
 import React, { createContext, useContext, useMemo } from "react";
 
-let uidIndex = 0
-const uid = () => String(uidIndex++)
-
 /* Context */
 
 const CraftContext = createContext<{
-  uid: typeof uid
+  uid: () => string
   componentMap: Map<string, React.ComponentType>
-}>({ uid, componentMap: new Map() })
+}>({ uid: () => '', componentMap: new Map() })
 
 export const useCraftProvider = () => useContext(CraftContext)
 
@@ -18,10 +15,16 @@ export interface CraftProviderProps {
 
 export const CraftProvider: React.FC<CraftProviderProps> = (props) => {
 
+  const uid = useMemo(() => {
+    let uidIndex = 0
+    const uid = () => String(uidIndex++)
+    return uid
+  }, [])
+
   const value = useMemo(() =>  ({
     uid,
     componentMap: props.componentMap
-  }), [props.componentMap])
+  }), [props.componentMap, uid])
 
   return (
     <CraftContext.Provider value={value}>
