@@ -121,4 +121,90 @@ describe('React Core', () => {
     expect(baseElement).toBeTruthy();
     expect(baseElement).toMatchSnapshot()
   });
+
+  it('should render container and children with item wrapper', () => {
+
+    // Example container component
+    type FlexContainerMeta = ExItem<'FlexContainer'>;
+
+    const FlexContainer: React.FC = () => {
+      const { meta } = useCraftNode<FlexContainerMeta>()
+
+      return (
+        <div className="flex-container" data-craft-uid={meta.__uid}>
+          {meta.children?.map((child) => (
+            <div className="flex-container-item" data-item-uid={child.__uid} key={child.__uid}>
+              <CraftNode meta={child}>
+                <CraftRender />
+              </CraftNode>
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    // Example component text
+    type TextMeta = ExItem<'Text', { content: string }>
+
+    const Text: React.FC = () => {
+      const { meta } = useCraftNode<TextMeta>()
+
+      return (
+        <div className="text" data-craft-uid={meta.__uid}>
+          <b>{ meta.config?.content }</b>
+        </div>
+      )
+    }
+
+    // Recursive components meta
+    type ExItem<N, C = Record<string, never>> = NodeMetaBase<N, C, NodeMeta<ExNodeMeta>>
+    type ExNodeMeta<Ex = ExUnused> = NodeMeta< Ex
+      | FlexContainerMeta
+      | TextMeta
+    >
+
+    // Components map
+    const componentMap = makeComponentMap()
+      .append<FlexContainerMeta>('FlexContainer', FlexContainer)
+      .append<TextMeta>('Text', Text)
+      .value()
+
+    // Example data
+    const rootMeta: RootMeta<ExNodeMeta> = {
+      children: [{
+        component: 'FlexContainer',
+        children: [{
+          component: 'Text',
+          config: { content: 'Hello' }
+        }]
+      }]
+    }
+
+    // Root Component
+    const RootComponent: React.FC = () => {
+      const { meta } = useCraftRoot<ExNodeMeta>()
+
+      return (
+        <div className="craft-root">
+          {meta.children.map((child) => (
+            <CraftNode meta={child} key={child.__uid}>
+              <CraftRender />
+            </CraftNode>
+          ))}
+        </div>
+      )
+    }
+
+    // Three layer construct
+    const { baseElement } = render(
+      <CraftProvider componentMap={componentMap}>
+        <CraftRoot<ExNodeMeta> meta={rootMeta}>
+          <RootComponent />
+        </CraftRoot>
+      </CraftProvider>
+    );
+
+    expect(baseElement).toBeTruthy();
+    expect(baseElement).toMatchSnapshot()
+  });
 });

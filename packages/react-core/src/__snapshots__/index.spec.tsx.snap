@@ -1,5 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`React Core should render container and children with item wrapper 1`] = `
+<body>
+  <div>
+    <div
+      class="craft-root"
+    >
+      <div
+        class="flex-container"
+        data-craft-uid="3"
+      >
+        <div
+          class="flex-container-item"
+          data-item-uid="4"
+        >
+          <div
+            class="text"
+            data-craft-uid="4"
+          >
+            <b>
+              Hello
+            </b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
 exports[`React Core should render successfully 1`] = `
 <body>
   <div>
