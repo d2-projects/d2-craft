@@ -64,7 +64,7 @@ describe('React Core', () => {
     }
 
     // Recursive components meta
-    type ExItem<N, C> = NodeMetaBase<N, C, NodeMeta<ExNodeMeta>>
+    type ExItem<N, C = Record<string, never>> = NodeMetaBase<N, C, NodeMeta<ExNodeMeta>>
     type ExNodeMeta<Ex = ExUnused> = NodeMeta< Ex
       | ComponentMetaA
       | ComponentMetaB
