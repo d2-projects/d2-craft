@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import { ExUnused, NodeMeta, NodeMetaBase, RootMeta } from '@d2-craft/typed';
-import { CraftProvider, CraftRoot, useCraftNode, makeComponentMap, CraftNode, CraftRender } from './index'
+import { CraftProvider, CraftRoot, useCraftNode, makeComponentMap, CraftNode, CraftRender, useCraftRoot } from './index'
 import React from 'react';
 
 describe('React Core', () => {
@@ -94,19 +94,26 @@ describe('React Core', () => {
       }]
     }
 
+    // Root Component
+    const RootComponent: React.FC = () => {
+      const { meta } = useCraftRoot<ExNodeMeta>()
+
+      return (
+        <div className="craft-root">
+          {meta.children.map((child) => (
+            <CraftNode meta={child} key={child.__uid}>
+              <CraftRender />
+            </CraftNode>
+          ))}
+        </div>
+      )
+    }
+
     // Three layer construct
     const { baseElement } = render(
       <CraftProvider componentMap={componentMap}>
         <CraftRoot<ExNodeMeta> meta={rootMeta}>
-          {(rootMeta) => (
-            <div className="craft-root">
-              {rootMeta.children.map((child) => (
-                <CraftNode meta={child} key={child.__uid}>
-                  <CraftRender />
-                </CraftNode>
-              ))}
-            </div>
-          )}
+          <RootComponent />
         </CraftRoot>
       </CraftProvider>
     );

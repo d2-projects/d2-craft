@@ -1,56 +1,74 @@
 import { createContext, ReactNode, useContext, useMemo } from "react";
 import { RootMeta } from '@d2-craft/typed'
-import { useImmer } from "use-immer";
+import { Updater, useImmer } from "use-immer";
 import { useCraftProvider } from "../craft-provider/craft-provider";
 
 export interface CraftRootProps<ExtendableNodeMeta> {
   meta: RootMeta<ExtendableNodeMeta>;
-  children: (rootMeta: RootMeta<ExtendableNodeMeta & { __uid: string }>) => ReactNode;
+  children?: ReactNode | undefined;
 }
 
-export function CraftRoot<ExtendableNodeMeta>(props: CraftRootProps<ExtendableNodeMeta>) {
+export function CraftRoot<ExtendableNodeMeta extends {
+  children?: ExtendableNodeMeta[]
+}>(props: CraftRootProps<ExtendableNodeMeta>) {
   const { uid } = useCraftProvider()
-  const indexedMeta = useMemo(() => indexTree<ExtendableNodeMeta>(props.meta, uid), [props.meta, uid])
 
-  useImmer(indexedMeta)
+  const indexedRootMeta = useMemo(() => {
+    type IndexedChildrenNodeMeta = ExtendableNodeMeta & { __uid: string, children?: IndexedChildrenNodeMeta[] }
+
+    const it = (node: ExtendableNodeMeta): IndexedChildrenNodeMeta => ({
+      ...node,
+      __uid: uid(),
+      children: node.children?.map(it)
+    })
+
+    type IndexedRootMeta = Omit<typeof props['meta'], 'children'> & {
+      children: IndexedChildrenNodeMeta[]
+    }
+
+    const tree: IndexedRootMeta = {
+      ...props.meta,
+      children: props.meta.children.map(it)
+    }
+
+    return tree
+  }, [props.meta, uid])
+
+  const [meta, updater] = useImmer(indexedRootMeta)
 
   return (
-    <CraftRootContext.Provider value={{ meta: indexedMeta }}>
-      {props.children(indexedMeta)}
+    <CraftRootContext.Provider value={{ meta, updater }}>
+      {props.children}
     </CraftRootContext.Provider>
   );
 }
 
 export default CraftRoot;
 
-/* Self utils */
-
-const indexTree =  <X extends { children?: X[] },>(
-  i: RootMeta<X>,
-  uidGenerator: () => string
-): RootMeta<X & { __uid: string }> => {
-
-  const it = (node: X): X => ({
-    ...node,
-    __uid: uidGenerator(),
-    children: node.children?.map(it)
-  })
-
-  const tree = { ...i, children: i.children.map(it) }
-
-  return tree as RootMeta<X & { __uid: string }>
-}
-
 /* Context */
 
 export const CraftRootContext = createContext<{
   meta: unknown
+  updater: unknown
 }>({
   meta: {
     children: []
-  }
+  },
+  updater: () => null
 })
 
-export const useCraftRoot = () => {
-  return useContext(CraftRootContext)
+export const useCraftRoot = <MetaType extends { children?: unknown[] }>() => {
+  type NodeType = MetaType extends { children?: Array<infer R> } ? R : unknown
+
+  type IndexedChildrenNodeMeta = NodeType & { __uid: string, children?: IndexedChildrenNodeMeta[] }
+
+  type IndexedRootMeta = Omit<MetaType, 'children'> & {
+    children: IndexedChildrenNodeMeta[]
+  }
+
+  const context = useContext(CraftRootContext)
+  const meta  = context.meta as unknown as IndexedRootMeta
+  const updater  = context.meta as unknown as Updater<IndexedRootMeta>
+
+  return { meta, updater }
 }
