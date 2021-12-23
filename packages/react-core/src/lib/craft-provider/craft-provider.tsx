@@ -1,16 +1,28 @@
 import React, { createContext, useContext, useMemo } from "react";
+import { FallbackProps } from "react-error-boundary";
+
+/* Inner components */
+
+export const DefaultErrorBoundary: React.FC<FallbackProps> = () => {
+  // TODO improve ui
+  return <div>RENDER ERROR</div>
+}
 
 /* Context */
 
 const CraftContext = createContext<{
   uid: () => string
-  componentMap: Map<string, React.ComponentType>
-}>({ uid: () => '', componentMap: new Map() })
+  componentMap: Map<string, React.ComponentType>,
+  notfoundComponent?: React.ComponentType
+  errorBoundaryComponent: React.ComponentType<FallbackProps>
+}>({ uid: () => '', componentMap: new Map(), errorBoundaryComponent: DefaultErrorBoundary })
 
 export const useCraftProvider = () => useContext(CraftContext)
 
 export interface CraftProviderProps {
   componentMap: Map<string, React.ComponentType>
+  notfoundComponent?: React.ComponentType
+  errorBoundaryComponent?: React.ComponentType<FallbackProps>
 }
 
 export const CraftProvider: React.FC<CraftProviderProps> = (props) => {
@@ -21,13 +33,13 @@ export const CraftProvider: React.FC<CraftProviderProps> = (props) => {
     return uid
   }, [])
 
-  const value = useMemo(() =>  ({
-    uid,
-    componentMap: props.componentMap
-  }), [props.componentMap, uid])
-
   return (
-    <CraftContext.Provider value={value}>
+    <CraftContext.Provider value={{
+      uid,
+      componentMap: props.componentMap,
+      notfoundComponent: props.notfoundComponent,
+      errorBoundaryComponent: props.errorBoundaryComponent ?? DefaultErrorBoundary
+    }}>
       {props.children}
     </CraftContext.Provider>
   );
