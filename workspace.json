@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "react-core": "packages/react-core",
-    "typed": "packages/typed"
+    "typed": "packages/typed",
+    "vue-core": "packages/vue-core"
   }
 }
