@@ -1,17 +1,19 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { FallbackProps } from 'react-error-boundary';
 import DefaultErrorBoundary from '../default-error-boundary/default-error-boundary';
+import DefaultNotfound from '../default-notfound/default-notfound';
 
 /* Context */
 
 const CraftContext = createContext<{
   uid: () => string;
   componentMap: Map<string, React.ComponentType>;
-  notfoundComponent?: React.ComponentType;
+  notfoundComponent: React.ComponentType;
   errorBoundaryComponent: React.ComponentType<FallbackProps>;
 }>({
   uid: () => '',
   componentMap: new Map(),
+  notfoundComponent: DefaultNotfound,
   errorBoundaryComponent: DefaultErrorBoundary,
 });
 
@@ -35,7 +37,7 @@ export const CraftProvider: React.FC<CraftProviderProps> = (props) => {
       value={{
         uid,
         componentMap: props.componentMap,
-        notfoundComponent: props.notfoundComponent,
+        notfoundComponent: props.notfoundComponent ?? DefaultNotfound,
         errorBoundaryComponent:
           props.errorBoundaryComponent ?? DefaultErrorBoundary,
       }}
