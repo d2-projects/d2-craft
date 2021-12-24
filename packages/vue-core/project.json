@@ -11,7 +11,7 @@
         ]
       }
     },
-    "build": {
+    "//build": {
       "executor": "@nx-plus/vue:library",
       "options": {
         "dest": "dist/packages/vue-core",
