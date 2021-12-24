@@ -23,7 +23,7 @@ const CraftNodeContext = createContext<{
   meta: exUnusedMeta as unknown,
 });
 
-export function useCraftNode<MetaType extends { children?: unknown[] }>() {
+export function useCraftNode<MetaType extends { component: string, children?: unknown[] }>() {
   type NodeType = MetaType extends { children?: Array<infer R> } ? R : unknown;
 
   type IndexedChildrenNodeMeta = NodeType & {
