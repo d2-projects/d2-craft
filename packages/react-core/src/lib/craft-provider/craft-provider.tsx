@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { FallbackProps } from 'react-error-boundary';
-import { DefaultErrorBoundary } from '../default-error-boundary/default-error-boundary';
+import DefaultErrorBoundary from '../default-error-boundary/default-error-boundary';
 
 /* Context */
 
