@@ -10,6 +10,17 @@
         "lintFilePatterns": ["packages/typed/**/*.ts"]
       }
     },
+
+    "build": {
+      "executor": "@nrwl/workspace:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/typed",
+        "main": "packages/typed/src/index.ts",
+        "tsConfig": "packages/typed/tsconfig.lib.json",
+        "assets": ["packages/typed/*.md"]
+      }
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/typed"],
