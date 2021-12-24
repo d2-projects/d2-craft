@@ -1,15 +1,6 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { FallbackProps } from 'react-error-boundary';
-import { useCraftNode } from '../craft-node/craft-node';
-
-/* Inner components */
-
-export const DefaultErrorBoundary: React.FC<FallbackProps> = () => {
-  const { meta } = useCraftNode();
-
-  // TODO improve ui
-  return <div data-error-craft-uid={meta.__uid}>RENDER ERROR</div>;
-};
+import { DefaultErrorBoundary } from '../default-error-boundary/default-error-boundary';
 
 /* Context */
 
