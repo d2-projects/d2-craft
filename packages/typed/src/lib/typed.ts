@@ -1,16 +1,16 @@
 export interface NodeMetaBase<Name, Config, _NodeMeta> {
-  component: Name,
-  config?: Config
-  children?: _NodeMeta[]
+  component: Name;
+  config?: Config;
+  children?: _NodeMeta[];
 }
 
 /**
  * Don't use it
  */
-export type ExUnused = { component: '_', children?: ExUnused[] }
-export const exUnusedMeta: ExUnused = { component: '_' }
+export type ExUnused = { component: '_'; children?: ExUnused[] };
+export const exUnusedMeta: ExUnused = { component: '_' };
 
-export type NodeMeta<Ex = ExUnused> = Ex
+export type NodeMeta<Ex = ExUnused> = Ex;
 
 /**
  * @example
@@ -36,5 +36,5 @@ export type NodeMeta<Ex = ExUnused> = Ex
  *   }
  */
 export interface RootMeta<ExtendableNodeMeta = null> {
-  children: ExtendableNodeMeta[]
+  children: ExtendableNodeMeta[];
 }
