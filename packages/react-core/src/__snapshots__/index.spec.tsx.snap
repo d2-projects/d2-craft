@@ -108,3 +108,79 @@ exports[`React Core should render successfully 1`] = `
   </div>
 </body>
 `;
+
+exports[`React Core should switch child: after 1`] = `
+<body>
+  <div>
+    <div
+      class="craft-root"
+    >
+      <div>
+        <button
+          aria-label="switch"
+        >
+          switch child
+        </button>
+      </div>
+      <div
+        class="craft-root-children"
+      >
+        <div
+          class="text"
+          data-craft-uid="1"
+        >
+          <b>
+            World
+          </b>
+        </div>
+        <div
+          class="text"
+          data-craft-uid="0"
+        >
+          <b>
+            Hello
+          </b>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`React Core should switch child: before 1`] = `
+<body>
+  <div>
+    <div
+      class="craft-root"
+    >
+      <div>
+        <button
+          aria-label="switch"
+        >
+          switch child
+        </button>
+      </div>
+      <div
+        class="craft-root-children"
+      >
+        <div
+          class="text"
+          data-craft-uid="0"
+        >
+          <b>
+            Hello
+          </b>
+        </div>
+        <div
+          class="text"
+          data-craft-uid="1"
+        >
+          <b>
+            World
+          </b>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

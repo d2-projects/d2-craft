@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { act, fireEvent, render } from '@testing-library/react';
 import { ExUnused, NodeMeta, NodeMetaBase, RootMeta } from '@d2-craft/typed';
 import {
   CraftProvider,
@@ -376,5 +376,91 @@ describe('React Core', () => {
 
     expect(baseElement).toBeTruthy();
     expect(baseElement).toMatchSnapshot();
+  });
+
+  it('should switch child', () => {
+    // Example component text
+    type TextMeta = ExItem<'Text', { content: string }>;
+
+    const Text: React.FC = () => {
+      const { meta } = useCraftNode<TextMeta>();
+
+      return (
+        <div className="text" data-craft-uid={meta.__uid}>
+          <b>{meta.config?.content}</b>
+        </div>
+      );
+    };
+
+    // Recursive components meta
+    type ExItem<N, C = Record<string, never>> = NodeMetaBase<
+      N,
+      C,
+      NodeMeta<ExNodeMeta>
+    >;
+    type ExNodeMeta<Ex = ExUnused> = NodeMeta<Ex | TextMeta>;
+
+    // Components map
+    const componentMap = makeComponentMap()
+      .append<TextMeta>('Text', Text)
+      .value();
+
+    // Example data
+    const rootMeta: RootMeta<ExNodeMeta> = {
+      children: [
+        {
+          component: 'Text',
+          config: { content: 'Hello' },
+        },
+        {
+          component: 'Text',
+          config: { content: 'World' },
+        },
+      ],
+    };
+
+    // Root Component
+    const RootComponent: React.FC = () => {
+      const { meta, updater } = useCraftRoot<ExNodeMeta>();
+
+      const onSwitchChild = () => {
+        updater((root) => {
+          root.children.reverse();
+        });
+      };
+
+      return (
+        <div className="craft-root">
+          <div>
+            <button aria-label="switch" onClick={onSwitchChild}>
+              switch child
+            </button>
+          </div>
+          <div className="craft-root-children">
+            {meta.children.map((child) => (
+              <CraftNode meta={child} key={child.__uid}>
+                <CraftRender />
+              </CraftNode>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    // Three layer construct
+    const { baseElement, getByLabelText } = render(
+      <CraftProvider componentMap={componentMap}>
+        <CraftRoot<ExNodeMeta> meta={rootMeta}>
+          <RootComponent />
+        </CraftRoot>
+      </CraftProvider>
+    );
+
+    expect(baseElement).toBeTruthy();
+    expect(baseElement).toMatchSnapshot('before');
+
+    fireEvent.click(getByLabelText('switch'));
+
+    expect(baseElement).toMatchSnapshot('after');
   });
 });
