@@ -29,6 +29,22 @@ exports[`React Core should render container and children with item wrapper 1`] =
 </body>
 `;
 
+exports[`React Core should render default error boundary component 1`] = `
+<body>
+  <div>
+    <div
+      class="craft-root"
+    >
+      <div
+        data-error-craft-uid="0"
+      >
+        RENDER ERROR
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
 exports[`React Core should render successfully 1`] = `
 <body>
   <div>
