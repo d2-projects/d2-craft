@@ -76,7 +76,7 @@ export const useCraftRoot = <MetaType extends { children?: unknown[] }>() => {
 
   const context = useContext(CraftRootContext);
   const meta = context.meta as unknown as IndexedRootMeta;
-  const updater = context.meta as unknown as Updater<IndexedRootMeta>;
+  const updater = context.updater as unknown as Updater<IndexedRootMeta>;
 
   return { meta, updater };
 };
