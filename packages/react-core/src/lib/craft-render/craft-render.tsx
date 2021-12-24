@@ -13,11 +13,11 @@ export const CraftRender: React.FC<CraftRenderProps> = () => {
 
   const Component = componentMap.get(meta.component) ?? notfoundComponent;
 
-  return Component ? (
+  return (
     <ErrorBoundary FallbackComponent={errorBoundaryComponent}>
       <Component />
     </ErrorBoundary>
-  ) : null;
+  );
 };
 
 export default CraftRender;
