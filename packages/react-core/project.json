@@ -11,6 +11,25 @@
         "lintFilePatterns": ["packages/react-core/**/*.{ts,tsx,js,jsx}"]
       }
     },
+    "build": {
+      "executor": "@nrwl/web:package",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/react-core",
+        "tsConfig": "packages/react-core/tsconfig.lib.json",
+        "project": "packages/react-core/package.json",
+        "entryFile": "packages/react-core/src/index.ts",
+        "external": ["react/jsx-runtime"],
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "assets": [
+          {
+            "glob": "packages/react-core/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/react-core"],
