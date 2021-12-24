@@ -5,13 +5,15 @@ import DefaultNotfound from '../default-notfound/default-notfound';
 
 /* Context */
 
+export const dummyUid = () => ''
+
 const CraftContext = createContext<{
   uid: () => string;
   componentMap: Map<string, React.ComponentType>;
   notfoundComponent: React.ComponentType;
   errorBoundaryComponent: React.ComponentType<FallbackProps>;
 }>({
-  uid: () => '',
+  uid: dummyUid,
   componentMap: new Map(),
   notfoundComponent: DefaultNotfound,
   errorBoundaryComponent: DefaultErrorBoundary,

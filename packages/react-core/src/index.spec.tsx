@@ -8,6 +8,8 @@ import {
   CraftNode,
   CraftRender,
   useCraftRoot,
+  dummyUid,
+  dummyUpdater,
 } from './index';
 import React from 'react';
 
@@ -462,5 +464,12 @@ describe('React Core', () => {
     fireEvent.click(getByLabelText('switch'));
 
     expect(baseElement).toMatchSnapshot('after');
+  });
+});
+
+describe('Dummy', () => {
+  it('should call dummy functions', () => {
+    expect(dummyUid()).toBe('');
+    expect(dummyUpdater()).toBeNull();
   });
 });

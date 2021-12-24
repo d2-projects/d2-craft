@@ -52,6 +52,8 @@ export default CraftRoot;
 
 /* Context */
 
+export const dummyUpdater = () => null;
+
 const CraftRootContext = createContext<{
   meta: unknown;
   updater: unknown;
@@ -59,7 +61,7 @@ const CraftRootContext = createContext<{
   meta: {
     children: [],
   },
-  updater: () => null,
+  updater: dummyUpdater,
 });
 
 export const useCraftRoot = <MetaType extends { children?: unknown[] }>() => {
