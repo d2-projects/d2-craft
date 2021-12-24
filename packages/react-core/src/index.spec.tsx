@@ -305,4 +305,76 @@ describe('React Core', () => {
     expect(baseElement).toBeTruthy();
     expect(baseElement).toMatchSnapshot();
   });
+
+  it('should render default notfound component', () => {
+    // Example component text
+    type TextMeta = ExItem<'Text', { content: string }>;
+
+    const Text: React.FC = () => {
+      const { meta } = useCraftNode<TextMeta>();
+
+      return (
+        <div className="text" data-craft-uid={meta.__uid}>
+          <b>{meta.config?.content}</b>
+        </div>
+      );
+    };
+
+    // Recursive components meta
+    type ExItem<N, C = Record<string, never>> = NodeMetaBase<
+      N,
+      C,
+      NodeMeta<ExNodeMeta>
+    >;
+    type ExNodeMeta<Ex = ExUnused> = NodeMeta<Ex | TextMeta>;
+
+    // Components map
+    const componentMap = makeComponentMap()
+      // .append<TextMeta>('Text', Text) // ! Ops. Not register to map
+      .value();
+
+    // Example data
+    const rootMeta: RootMeta<ExNodeMeta> = {
+      children: [
+        {
+          component: 'Text',
+          config: { content: 'Hello' },
+        },
+      ],
+    };
+
+    // Root Component
+    const RootComponent: React.FC = () => {
+      const { meta } = useCraftRoot<ExNodeMeta>();
+
+      return (
+        <div className="craft-root">
+          {meta.children.map((child) => (
+            <CraftNode meta={child} key={child.__uid}>
+              <CraftRender />
+            </CraftNode>
+          ))}
+        </div>
+      );
+    };
+
+    // Mock console
+    jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+    const consoleWarn = console.warn as jest.Mock<void, unknown[]>;
+
+    // Three layer construct
+    const { baseElement } = render(
+      <CraftProvider componentMap={componentMap}>
+        <CraftRoot<ExNodeMeta> meta={rootMeta}>
+          <RootComponent />
+        </CraftRoot>
+      </CraftProvider>
+    );
+
+    expect(consoleWarn).toHaveBeenCalledTimes(1);
+    consoleWarn.mockClear();
+
+    expect(baseElement).toBeTruthy();
+    expect(baseElement).toMatchSnapshot();
+  });
 });

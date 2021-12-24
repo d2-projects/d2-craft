@@ -45,6 +45,24 @@ exports[`React Core should render default error boundary component 1`] = `
 </body>
 `;
 
+exports[`React Core should render default notfound component 1`] = `
+<body>
+  <div>
+    <div
+      class="craft-root"
+    >
+      <div
+        data-notfound-craft-uid="0"
+      >
+        Component 
+        Text
+         not found
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
 exports[`React Core should render successfully 1`] = `
 <body>
   <div>
