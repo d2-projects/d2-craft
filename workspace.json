@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "example-react-antd-craft": "packages/example-react-antd-craft",
     "react-core": "packages/react-core",
     "typed": "packages/typed",
     "vue-core": "packages/vue-core"
