@@ -7,6 +7,7 @@
   },
   "private": true,
   "dependencies": {
+    "antd": "^4.17.4",
     "core-js": "^3.6.5",
     "immer": "^9.0.7",
     "react": "17.0.2",

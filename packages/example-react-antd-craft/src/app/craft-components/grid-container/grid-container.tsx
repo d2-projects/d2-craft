@@ -1,4 +1,5 @@
 import { CraftNode, CraftRender, useCraftNode } from '@d2-craft/react-core';
+import { Row, Col } from 'antd';
 import { ExItem } from '../craft';
 
 export interface GridContainerConfig {
@@ -11,13 +12,15 @@ const GridContainer: React.FC = () => {
   const { meta } = useCraftNode<GridContainerMeta>();
 
   return (
-    <div>
+    <Row>
       {meta.children?.map((child) => (
-        <CraftNode meta={child} key={child.__uid}>
-          <CraftRender />
-        </CraftNode>
+        <Col key={child.__uid}>
+          <CraftNode meta={child} key={child.__uid}>
+            <CraftRender />
+          </CraftNode>
+        </Col>
       ))}
-    </div>
+    </Row>
   );
 };
 
