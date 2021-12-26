@@ -1,39 +1,40 @@
-import styles from './app.module.scss';
+import { useMemo } from 'react';
+import { RootMeta } from '@d2-craft/typed';
+import { componentMap, ExNodeMeta } from './craft-components/craft';
 
-import { Route, Link } from 'react-router-dom';
+import styles from './app.module.scss';
+import { CraftProvider, CraftRoot } from '@d2-craft/react-core';
+import RootContainer from './craft-components/root-container/root-container';
+
+// import { Route, Link } from 'react-router-dom';
 
 export function App() {
+  const initialRootMeta = useMemo(() => {
+    const rootMeta: RootMeta<ExNodeMeta> = {
+      children: [
+        {
+          component: 'GridContainer',
+          children: [
+            {
+              component: 'PureText',
+              config: {
+                content: 'hello',
+              },
+            },
+          ],
+        },
+      ],
+    };
+    return rootMeta;
+  }, []);
+
   return (
     <div className={styles.app}>
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
-      <Route
-        path="/"
-        exact
-        render={() => (
-          <div>
-            This is the generated root route.{' '}
-            <Link to="/page-2">Click here for page 2.</Link>
-          </div>
-        )}
-      />
-      <Route
-        path="/page-2"
-        exact
-        render={() => (
-          <div>
-            <Link to="/">Click here to go back to root page.</Link>
-          </div>
-        )}
-      />
+      <CraftProvider componentMap={componentMap}>
+        <CraftRoot<ExNodeMeta> meta={initialRootMeta}>
+          <RootContainer />
+        </CraftRoot>
+      </CraftProvider>
     </div>
   );
 }
