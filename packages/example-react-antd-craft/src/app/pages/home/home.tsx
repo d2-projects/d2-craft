@@ -20,6 +20,28 @@ const initialRootMeta: RootMeta<ExNodeMeta> = {
         },
       ],
     },
+    {
+      component: 'GridContainer',
+      children: [
+        {
+          component: 'PureText',
+          config: {
+            content: 'hello',
+          },
+        },
+        {
+          component: 'GridContainer',
+          children: [
+            {
+              component: 'PureText',
+              config: {
+                content: 'hello',
+              },
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 

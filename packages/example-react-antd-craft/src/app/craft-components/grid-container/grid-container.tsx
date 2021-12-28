@@ -2,7 +2,6 @@ import { CraftNode, CraftRender, useCraftNode } from '@d2-craft/react-core';
 import { useContainerNodeSkeleton } from '../../skeleton';
 import { useNodeActive } from '../../app-provider';
 import { ExItem } from '../craft';
-import { Row, Col } from 'antd';
 
 export interface GridContainerConfig {
   align?: 'top' | 'middle' | 'bottom';
@@ -16,18 +15,18 @@ const GridContainer: React.FC = () => {
   const { clickTrigger } = useNodeActive();
 
   return (
-    <Row
+    <div
       className={className}
       onClick={clickTrigger}
     >
       {meta.children?.map((child) => (
-        <Col key={child.__uid}>
+        <div key={child.__uid}>
           <CraftNode meta={child} key={child.__uid}>
             <CraftRender />
           </CraftNode>
-        </Col>
+        </div>
       ))}
-    </Row>
+    </div>
   );
 };
 

@@ -3,17 +3,23 @@
   outline-style: solid;
   outline-color: transparent;
 
-  transition: outline-color 0.28s;
+  transition: outline-color, padding, margin 0.28s;
 
   &.isContainer {
     outline-style: dashed;
-    outline-offset: 4px;
   }
 
   &.isCreative {
     outline-color: rgba(138, 138, 138, 0.308);
 
+    padding: 0;
+    margin: 9px;
+
     user-select: none;
+
+    &.isContainer {
+      padding: 1px;
+    }
 
     &.isActive {
       outline-color: #1dacffbe;
