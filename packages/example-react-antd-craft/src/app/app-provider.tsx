@@ -1,4 +1,11 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import { useCraftNode } from '@d2-craft/react-core';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 export enum Mode {
   CREATIVE = 'CREATIVE',
@@ -7,20 +14,22 @@ export enum Mode {
 
 const AppContext = createContext<{
   mode: Mode;
-  setMode: (mode: Mode) => void;
+  setMode: React.Dispatch<React.SetStateAction<Mode>>;
+  activeId: string | null;
+  setActiveId: React.Dispatch<React.SetStateAction<string | null>>;
 }>({
   mode: Mode.SURVIVAL,
   setMode: () => undefined,
+  activeId: null,
+  setActiveId: () => undefined,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface AppProviderProps {}
-
-export const AppProvider: React.FC<AppProviderProps> = (props) => {
+export const AppProvider: React.FC = (props) => {
   const [mode, setMode] = useState(Mode.SURVIVAL);
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <AppContext.Provider value={{ mode, setMode }}>
+    <AppContext.Provider value={{ mode, setMode, activeId, setActiveId }}>
       {props.children}
     </AppContext.Provider>
   );
@@ -44,5 +53,52 @@ export const useAppProvider = () => {
     toCreative,
     isSurvival,
     toSurvival,
+  };
+};
+
+export const useAppActive = () => {
+  const { activeId, setActiveId } = useContext(AppContext);
+
+  const hasActive = Boolean(activeId);
+
+  return {
+    activeId,
+    hasActive,
+    setActiveId,
+  };
+};
+
+export const useNodeActive = () => {
+  const { activeId, setActiveId } = useContext(AppContext);
+  const {
+    meta: { __uid: currentId },
+  } = useCraftNode();
+  const { isCreative } = useAppProvider();
+
+  const isActive = currentId === activeId;
+
+  const triggerActive = useCallback(
+    (targetId: string) => {
+      setActiveId((lastId) => {
+        if (targetId === lastId) return null;
+        return targetId;
+      });
+    },
+    [setActiveId]
+  );
+
+  const clickTrigger = useCallback(
+    (event) => {
+      if (isCreative) {
+        triggerActive(currentId);
+        event.stopPropagation();
+      }
+    },
+    [currentId, isCreative, triggerActive]
+  );
+
+  return {
+    isActive,
+    clickTrigger,
   };
 };

@@ -1,0 +1,23 @@
+.skeleton {
+  outline-width: 1px;
+  outline-style: solid;
+  outline-color: transparent;
+
+  transition: outline-color 0.28s;
+
+  &.isContainer {
+    outline-style: dashed;
+    outline-offset: 4px;
+  }
+
+  &.isCreative {
+    outline-color: rgba(138, 138, 138, 0.308);
+
+    user-select: none;
+
+    &.isActive {
+      outline-color: #1dacffbe;
+      outline-width: 2px;
+    }
+  }
+}

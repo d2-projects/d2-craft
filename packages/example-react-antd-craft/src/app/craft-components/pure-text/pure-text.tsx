@@ -1,4 +1,6 @@
 import { useCraftNode } from '@d2-craft/react-core';
+import { useNodeActive } from '../../app-provider';
+import { useBlockNodeSkeleton } from '../../skeleton';
 import { ExItem } from '../craft';
 
 export interface PureTextConfig {
@@ -9,9 +11,13 @@ export type PureTextMeta = ExItem<'PureText', PureTextConfig>;
 
 const PureText: React.FC = () => {
   const { meta } = useCraftNode<PureTextMeta>();
+  const { className } = useBlockNodeSkeleton();
+  const { clickTrigger } = useNodeActive();
 
   return (
-    <div>{meta.config?.content}</div>
+    <div className={className} onClick={clickTrigger}>
+      {meta.config?.content}
+    </div>
   );
 };
 

@@ -2,7 +2,7 @@ import { Route } from 'react-router-dom';
 import classNames from 'classnames';
 import { CraftProvider } from '@d2-craft/react-core';
 import { componentMap } from './craft-components/craft';
-import { AppProvider, useAppProvider } from './app-provider';
+import { AppProvider, useNodeActive, useAppProvider, useAppActive } from './app-provider';
 import HomePage from './pages/home/home';
 
 import styles from './app.module.scss';
@@ -21,13 +21,17 @@ export const App: React.FC = () => {
 
 const AppWorkspace: React.FC = (props) => {
   const { isCreative } = useAppProvider();
+  const { hasActive } = useAppActive();
+
+  const showAside = isCreative && hasActive;
+
   return (
     <div
       className={classNames(styles.app, {
-        [styles.isCreative]: isCreative,
+        [styles.show]: showAside,
       })}
     >
-      {isCreative && <aside className={styles.aside}>TODO</aside>}
+      {showAside && <aside className={styles.aside}>TODO</aside>}
       <main className={styles.main}>{props.children}</main>
     </div>
   );
