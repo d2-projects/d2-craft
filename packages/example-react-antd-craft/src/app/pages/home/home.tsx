@@ -2,7 +2,7 @@ import { CraftRoot } from '@d2-craft/react-core';
 import { RootMeta } from '@d2-craft/typed';
 import { Breadcrumb, Button, Layout, Space } from 'antd';
 import { RouteComponentProps } from 'react-router-dom';
-import { useAppProvider } from '../../app-provider';
+import { useAppActive, useAppProvider } from '../../app-provider';
 import { ExNodeMeta } from '../../craft-components/craft';
 import RootContainer from '../../craft-components/root-container/root-container';
 import { SwapOutlined } from '@ant-design/icons';
@@ -25,6 +25,7 @@ const initialRootMeta: RootMeta<ExNodeMeta> = {
 
 const HomePage: React.FC<RouteComponentProps> = () => {
   const { isCreative, isSurvival, toCreative, toSurvival } = useAppProvider();
+  const { setActiveId } = useAppActive();
 
   return (
     <Layout
@@ -56,7 +57,13 @@ const HomePage: React.FC<RouteComponentProps> = () => {
             </Button>
           )}
           {!isSurvival && (
-            <Button onClick={() => toSurvival()} icon={<SwapOutlined />}>
+            <Button
+              onClick={() => {
+                setActiveId(null);
+                toSurvival();
+              }}
+              icon={<SwapOutlined />}
+            >
               To Survival Mode
             </Button>
           )}
