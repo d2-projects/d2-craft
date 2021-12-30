@@ -12,12 +12,15 @@ export type PureTextMeta = ExItem<'PureText', PureTextConfig>;
 const PureText: React.FC = () => {
   const { meta } = useCraftNode<PureTextMeta>();
   const { className } = useBlockNodeSkeleton();
-  const { clickTrigger } = useNodeActive();
+  const { isActive, clickTrigger } = useNodeActive();
 
   return (
-    <div className={className} onClick={clickTrigger}>
-      {meta.config?.content}
-    </div>
+    <>
+      <div className={className} onClick={clickTrigger}>
+        {meta.config?.content}
+      </div>
+      {/* {isActive && <ConfigurePortal>TODO</ConfigurePortal>} */}
+    </>
   );
 };
 
