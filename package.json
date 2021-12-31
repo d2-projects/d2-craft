@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "release": "standard-version",
     "postinstall": "node node_modules/@nx-plus/vue/patch-nx-dep-graph.js"
   },
   "private": true,
@@ -60,6 +61,7 @@
     "jest-transform-stub": "^2.0.0",
     "prettier": "^2.3.1",
     "react-test-renderer": "17.0.2",
+    "standard-version": "^9.3.2",
     "ts-jest": "27.0.5",
     "typescript": "~4.4.3",
     "vue3-jest": "^27.0.0-alpha.1"
