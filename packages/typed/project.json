@@ -12,13 +12,20 @@
     },
 
     "build": {
-      "executor": "@nrwl/workspace:tsc",
+      "executor": "@nrwl/web:package",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/typed",
-        "main": "packages/typed/src/index.ts",
         "tsConfig": "packages/typed/tsconfig.lib.json",
-        "assets": ["packages/typed/*.md"]
+        "project": "packages/typed/package.json",
+        "entryFile": "packages/typed/src/index.ts",
+        "assets": [
+          {
+            "glob": "packages/react-core/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
       }
     },
     "test": {
