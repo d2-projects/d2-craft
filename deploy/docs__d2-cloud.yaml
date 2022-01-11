@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: d2-craft-docs
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      k8s-app: d2-craft-docs
+  template:
+    metadata:
+      labels:
+        k8s-app: d2-craft-docs
+    spec:
+      containers:
+      - env:
+        image: ccr.ccs.tencentyun.com/aysnine/d2-craft-docs:latest
+        name: d2-craft-docs
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 10m
+            memory: 64Mi
+      imagePullSecrets:
+      - name: qcloudregistrykey
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: d2-craft-docs
+spec:
+  type: ClusterIP
+  ports:
+  - name: entry
+    port: 80
+    targetPort: 80
+  selector:
+    k8s-app: d2-craft-docs
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: d2-craft-docs
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`craft.d2.pub`)
+      kind: Rule
+      services:
+        - name: d2-craft-docs
+          port: entry
+      middlewares:
+        - name: d2-craft-docs-https-redirect-middleware
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: d2-craft-docs-https-redirect-middleware
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: d2-craft-docs-tls
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`craft.d2.pub`)
+      kind: Rule
+      services:
+        - name: d2-craft-docs
+          port: entry
+  tls:
+    certResolver: default
