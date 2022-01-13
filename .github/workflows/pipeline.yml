@@ -88,6 +88,15 @@ jobs:
         uses: "WyriHaximus/github-action-get-previous-tag@v1"
         with:
           fallback: 1.0.0 # Optional fallback tag to use when no tag can be found
+
+      -
+        name: Get Short Sha
+        id: short-sha
+        uses: benjlevesque/short-sha@v1.2
+      - run: echo $SHA
+        env:
+          SHA: ${{ steps.short-sha.outputs.sha }}
+
       -
         name: Build and push
         uses: docker/build-push-action@v2
@@ -95,13 +104,13 @@ jobs:
           file: docs.Dockerfile
           push: true
           tags: |
-            aysnine/d2-craft-docs:${{ steps.previousTag.outputs.tag }}_${{ steps.previousTag.outputs.timestamp }}
+            aysnine/d2-craft-docs:${{ steps.previousTag.outputs.tag }}_${{ steps.short-sha.outputs.sha }}
             aysnine/d2-craft-docs:latest
-            ccr.ccs.tencentyun.com/aysnine/d2-craft-docs:${{ steps.previousTag.outputs.tag }}_${{ steps.previousTag.outputs.timestamp }}
+            ccr.ccs.tencentyun.com/aysnine/d2-craft-docs:${{ steps.previousTag.outputs.tag }}_${{ steps.short-sha.outputs.sha }}
             ccr.ccs.tencentyun.com/aysnine/d2-craft-docs:latest
 
       - run: |
-          TAG=${{ steps.previousTag.outputs.tag }}_${{ steps.previousTag.outputs.timestamp }}
+          TAG=${{ steps.previousTag.outputs.tag }}_${{ steps.short-sha.outputs.sha }}
           echo $TAG
           sed -i -e "s/\:latest/\:${TAG}/g" ./deploy/docs__d2-cloud.yaml
           cat ./deploy/docs__d2-cloud.yaml
