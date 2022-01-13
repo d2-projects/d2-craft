@@ -92,7 +92,7 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v2
         with:
-          file: Dockerfile.docs
+          file: docs.Dockerfile
           push: true
           tags: |
             aysnine/d2-craft-docs:${{ steps.previousTag.outputs.tag }}_${{ steps.previousTag.outputs.timestamp }}
