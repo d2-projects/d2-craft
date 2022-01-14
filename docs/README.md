@@ -13,5 +13,76 @@ footer: MIT Licensed
 ---
 
 ::: warning
-This document WIP. Come soon 🍷.
+This document is WIP. Come soon 🍷.
 :::
+
+## Used in different frameworks
+
+### React
+
+Install base library:
+
+:::: code-group
+::: code-group-item yarn
+
+```sh
+yarn add @d2-craft/{typed,react-core}
+```
+
+:::
+::: code-group-item npm
+
+```sh
+npm install @d2-craft/typed @d2-craft/react-core
+```
+
+:::
+::::
+
+### Vue
+
+::: warning
+Library base Vue is WIP.
+:::
+
+<!--
+Install base library:
+
+:::: code-group
+::: code-group-item yarn
+
+```sh
+yarn add @d2-craft/{typed,vue-core}
+```
+
+:::
+::: code-group-item npm
+
+```sh
+npm install @d2-craft/typed @d2-craft/vue-core
+```
+
+:::
+::::
+ -->
+
+## Universal UI tree schema
+
+```json
+{
+  "children": [
+    { "component": "Text" },
+    { "component": "Text", "config": { "content": "Hello" } },
+    {
+      "component": "FlexContainer",
+      "children": [
+        { "component": "Text", "config": { "content": "inside" } },
+        {
+          "component": "FlexContainer",
+          "config": { "direction": "horizontal", "spacing": "large" }
+        }
+      ]
+    }
+  ]
+}
+```
