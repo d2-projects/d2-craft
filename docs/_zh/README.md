@@ -7,7 +7,7 @@ actions:
     link: /_zh/guide/getting-started.html
     type: primary
   - text: 项目简介
-    link: /guide/
+    link: /_zh/guide/
     type: secondary
 footer: MIT Licensed
 ---
