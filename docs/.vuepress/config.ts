@@ -12,6 +12,7 @@ export default defineUserConfig<DefaultThemeOptions>({
   themeConfig: {
     logo: '/images/logo.png',
     repo: 'https://github.com/d2-projects/d2-craft',
+    docsDir: 'docs',
 
     // i18n translate
     locales: {
