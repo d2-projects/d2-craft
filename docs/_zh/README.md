@@ -9,6 +9,13 @@ actions:
   - text: 项目简介
     link: /_zh/guide/
     type: secondary
+features:
+  - title: 简单的 Schema
+    details: 只有一个根节点和多个可嵌套子节点的结构，易于组合和扩展。
+  - title: 类型安全
+    details: 所有库都用 TypeScript 编写。暴露有用的接口、类型和一些辅助函数。
+  - title: 多框架支持
+    details: 使用对应的库实现对多种前端框架的支持（暂未考虑跨框架）。
 footer: MIT Licensed
 ---
 
@@ -66,7 +73,7 @@ npm install @d2-craft/typed @d2-craft/vue-core
 ::::
  -->
 
-## 统一的树形 UI Schema
+## 简单通用的树形 UI Schema
 
 ```json
 {
