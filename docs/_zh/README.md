@@ -32,14 +32,14 @@ footer: MIT Licensed
 :::: code-group
 ::: code-group-item yarn
 
-```sh
+```sh:no-line-numbers
 yarn add @d2-craft/{typed,react-core}
 ```
 
 :::
 ::: code-group-item npm
 
-```sh
+```sh:no-line-numbers
 npm install @d2-craft/typed @d2-craft/react-core
 ```
 
