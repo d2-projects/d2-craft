@@ -10,7 +10,7 @@ export default defineUserConfig<DefaultThemeOptions>({
   // theme and its config
   theme: '@vuepress/theme-default',
   themeConfig: {
-    logo: '/images/logo.png',
+    logo: '/images/craft-pre-logo.svg',
     repo: 'https://github.com/d2-projects/d2-craft',
     docsDir: 'docs',
 

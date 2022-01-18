@@ -1,7 +1,7 @@
 ---
 home: true
 title: 主页
-heroImage: /images/logo.png
+heroImage: /images/craft-pre-logo.svg
 actions:
   - text: 快速上手
     link: /_zh/guide/getting-started.html

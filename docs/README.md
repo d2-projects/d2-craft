@@ -1,7 +1,7 @@
 ---
 home: true
 title: Home
-heroImage: /images/logo.png
+heroImage: /images/craft-pre-logo.svg
 actions:
   - text: Get Started
     link: /guide/getting-started.html
