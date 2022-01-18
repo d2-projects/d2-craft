@@ -27,8 +27,6 @@ footer: MIT Licensed
 
 ### React
 
-安装基础依赖：
-
 :::: code-group
 ::: code-group-item yarn
 
@@ -46,32 +44,24 @@ npm install @d2-craft/typed @d2-craft/react-core
 :::
 ::::
 
-### Vue
-
-::: warning
-基于 Vue 的基础库还在开发中，敬请期待。
-:::
-
-<!--
-安装基础依赖：
+### Vue (⚠️ 开发中！暂未发布！)
 
 :::: code-group
 ::: code-group-item yarn
 
-```sh
-yarn add @d2-craft/{typed,vue-core}
+```sh:no-line-numbers
+# yarn add @d2-craft/{typed,vue-core}
 ```
 
 :::
 ::: code-group-item npm
 
-```sh
-npm install @d2-craft/typed @d2-craft/vue-core
+```sh:no-line-numbers
+# npm install @d2-craft/typed @d2-craft/vue-core
 ```
 
 :::
 ::::
- -->
 
 ## 简单通用的树形 UI Schema
 

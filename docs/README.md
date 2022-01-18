@@ -27,8 +27,6 @@ This document is WIP. Come soon 🍷.
 
 ### React
 
-Install base library:
-
 :::: code-group
 ::: code-group-item yarn
 
@@ -46,32 +44,24 @@ npm install @d2-craft/typed @d2-craft/react-core
 :::
 ::::
 
-### Vue
-
-::: warning
-Library base Vue is WIP.
-:::
-
-<!--
-Install base library:
+### Vue (⚠️ WIP! No release!)
 
 :::: code-group
 ::: code-group-item yarn
 
-```sh
-yarn add @d2-craft/{typed,vue-core}
+```sh:no-line-numbers
+# yarn add @d2-craft/{typed,vue-core}
 ```
 
 :::
 ::: code-group-item npm
 
-```sh
-npm install @d2-craft/typed @d2-craft/vue-core
+```sh:no-line-numbers
+# npm install @d2-craft/typed @d2-craft/vue-core
 ```
 
 :::
 ::::
- -->
 
 ## Simple UI Tree Schema
 
