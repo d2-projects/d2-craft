@@ -86,4 +86,20 @@ export default defineUserConfig<DefaultThemeOptions>({
       description: '你的前端自由世界：用配置驱动交互',
     },
   },
+
+  plugins: [
+    [
+      '@vuepress/plugin-search',
+      {
+        locales: {
+          '/': {
+            placeholder: 'Search',
+          },
+          '/_zh/': {
+            placeholder: '搜索',
+          },
+        },
+      },
+    ],
+  ],
 });
