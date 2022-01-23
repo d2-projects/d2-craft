@@ -8,6 +8,17 @@ export default defineUserConfig<DefaultThemeOptions>({
   title: 'D2 Craft',
   description: 'Your frontend craft world: Config Driven UI.',
 
+  // access analyze
+  head: [
+    [
+      'script',
+      {
+        type: 'text/javascript',
+        src: 'https://hm.baidu.com/hm.js?0af4f55a2966d4253bb8b663fe67617c',
+      },
+    ],
+  ],
+
   // theme and its config
   theme: '@vuepress/theme-default',
   themeConfig: {
