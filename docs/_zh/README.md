@@ -63,7 +63,7 @@ npm install @d2-craft/typed @d2-craft/react-core
 :::
 ::::
 
-## 简单通用的树形 UI Schema
+## 通用 Schema
 
 ```json
 {

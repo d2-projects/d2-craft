@@ -63,7 +63,7 @@ npm install @d2-craft/typed @d2-craft/react-core
 :::
 ::::
 
-## Simple UI Tree Schema
+## Universal Schema
 
 ```json
 {
