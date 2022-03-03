@@ -6,7 +6,7 @@ export default defineUserConfig<DefaultThemeOptions>({
   // site config
   lang: 'en-US',
   title: 'D2 Craft',
-  description: 'Your frontend craft world: Config Driven UI.',
+  description: 'Your frontend craft world: Meta-data Driven UI.',
 
   // access analyze
   head: [
@@ -90,12 +90,12 @@ export default defineUserConfig<DefaultThemeOptions>({
     '/': {
       lang: 'en-US',
       title: 'D2 Craft',
-      description: 'Your frontend craft world: Config Driven UI.',
+      description: 'Your frontend craft world: Meta-data Driven UI.',
     },
     '/_zh/': {
       lang: 'zh-CN',
       title: 'D2 Craft',
-      description: '你的前端自由世界：用配置驱动交互',
+      description: '你的前端自由世界：元数据驱动交互',
     },
   },
 
